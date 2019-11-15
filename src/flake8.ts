@@ -1,3 +1,5 @@
+import * as core from '@actions/core'
+
 const MATCHER = /(\S+):(\d+):(\d+): ([A-Z]\d+) (.+)/
 
 import { Lint } from './types'
@@ -15,4 +17,17 @@ export function parseLine(line: string): Lint | null {
     code: match[4],
     message: match[5],
   }
+}
+
+export function parseLines(lines: string[]): Lint[] {
+  const result: Lint[] = []
+  for (const line of lines) {
+    const lint = parseLine(line)
+    if (lint) {
+      result.push(lint)
+    } else {
+      core.warning(`Unexpected line: ${line}`)
+    }
+  }
+  return result
 }
