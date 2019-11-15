@@ -16,6 +16,7 @@ function makeAnnotation(lint: Lint): kit.CheckRunAnnotation {
 
 async function run(): Promise<void> {
   const githubToken = core.getInput('github-token')
+  const postAnnotations = core.getInput('post-annotations') === 'true'
   const patterns = core
     .getInput('patterns')
     .split(' ')
@@ -43,7 +44,7 @@ async function run(): Promise<void> {
     conclusion: lints.length ? 'failure' : 'success',
     summary,
     text,
-    annotations: lints.map(makeAnnotation),
+    annotations: postAnnotations ? lints.map(makeAnnotation) : [],
   })
 }
 
