@@ -1,3 +1,6 @@
+
+lib
+
 # Include the .npmrc in this repo.
 !.npmrc
 

@@ -1,19 +1,23 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
+import * as kit from '@harveyr/github-actions-kit'
 
-async function run() {
-  try {
-    const ms = core.getInput('milliseconds')
-    console.log(`Waiting ${ms} milliseconds ...`)
+async function run(): Promise<void> {
+  const patterns = core
+    .getInput('patterns')
+    .split(' ')
+    .map(p => {
+      return p.trim()
+    })
+    .filter(p => {
+      return p.length > 0
+    })
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
-  } catch (error) {
-    core.setFailed(error.message)
+  let output = ''
+  if (patterns.length) {
+    const { stdout, stderr } = await kit.execAndCapture('flake8', patterns)
+    output = stdout + stderr
   }
+  const lines = output.split('\n')
 }
 
 run().catch(err => {
