@@ -11,7 +11,7 @@ inputs:
   post-annotations:
     description: Post annotations (vs. letting problem matchers scrape them)
     required: false
-    default: 'false'
+    default: 'true'
 runs:
   using: 'node12'
   main: 'lib/main.js'

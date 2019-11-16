@@ -27,9 +27,13 @@ async function run(): Promise<void> {
       return p.length > 0
     })
 
+  await kit.execAndCapture('flake8', ['--version'])
+
   let text = ''
   if (patterns.length) {
-    const { stdout, stderr } = await kit.execAndCapture('flake8', patterns)
+    const { stdout, stderr } = await kit.execAndCapture('flake8', patterns, {
+      failOnStdErr: false,
+    })
     text = stdout + stderr
   }
   const lines = text.split('\n')
