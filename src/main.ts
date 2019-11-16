@@ -8,7 +8,6 @@ function makeAnnotation(lint: Lint): kit.CheckRunAnnotation {
   return {
     level: 'failure',
     startLine: lint.line,
-    startColumn: lint.column,
     message: lint.message,
     path: lint.filePath,
   }
