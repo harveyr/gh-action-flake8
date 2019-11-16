@@ -26,10 +26,9 @@ async function run(): Promise<void> {
       return p.length > 0
     })
 
-  await kit.execAndCapture('flake8', ['--version'])
-
   let text = ''
   if (patterns.length) {
+    await kit.execAndCapture('flake8', ['--version'])
     const { stdout, stderr } = await kit.execAndCapture('flake8', patterns, {
       failOnStdErr: false,
     })
