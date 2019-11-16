@@ -10,6 +10,12 @@ jobs:
 
       - run: npm run build
 
+      - name: prettier
+        uses: harveyr/gh-action-prettier@releases/v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          patterns: src/**.ts
+
       - name: eslint
         uses: harveyr/gh-action-eslint@releases/v2
         with:
