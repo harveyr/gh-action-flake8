@@ -5,6 +5,9 @@ inputs:
   github-token:
     description: Github token for posting check run
     required: true
+  flake8-path:
+    description: Github token for posting check run
+    default: ''
   patterns:
     description: File patterns to run against
     default: ''
