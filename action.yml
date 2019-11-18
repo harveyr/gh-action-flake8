@@ -5,8 +5,13 @@ inputs:
   github-token:
     description: Github token for posting check run
     required: true
+  flake8-path:
+    description: Path to flake8 executable
+    required: false
+    default: ''
   patterns:
     description: File patterns to run against
+    required: false
     default: ''
   post-annotations:
     description: Post annotations (vs. letting problem matchers scrape them)
