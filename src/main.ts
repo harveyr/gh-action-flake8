@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as kit from '@harveyr/github-actions-kit'
+import { trimAndFilter } from './util'
 
 import { parseLines } from './flake8'
 import { Lint } from './types'
@@ -16,15 +17,7 @@ function makeAnnotation(lint: Lint): kit.CheckRunAnnotation {
 async function run(): Promise<void> {
   const githubToken = core.getInput('github-token')
   const postAnnotations = core.getInput('post-annotations') === 'true'
-  const patterns = core
-    .getInput('patterns')
-    .split(' ')
-    .map(p => {
-      return p.trim()
-    })
-    .filter(p => {
-      return p.length > 0
-    })
+  const patterns = trimAndFilter(core.getInput('patterns').split(' '))
 
   const flake8Path = core.getInput('flake8-path') || 'flake8'
 
@@ -36,7 +29,7 @@ async function run(): Promise<void> {
     })
     text = stdout + stderr
   }
-  const lines = text.split('\n')
+  const lines = trimAndFilter(text.split('\n'))
   const lints = parseLines(lines)
 
   const summary = patterns.length
