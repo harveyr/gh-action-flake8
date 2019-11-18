@@ -1,9 +1,9 @@
 export function trimAndFilter(items: string[]): string[] {
   return items
-    .map(l => {
-      return l.trim()
+    .map(i => {
+      return i.trim()
     })
-    .filter(l => {
-      return l.length > 0
+    .filter(i => {
+      return i.length > 0
     })
 }
