@@ -26,10 +26,12 @@ async function run(): Promise<void> {
       return p.length > 0
     })
 
+  const flake8Path = core.getInput('flake8-path') || 'flake8'
+
   let text = ''
   if (patterns.length) {
-    await kit.execAndCapture('flake8', ['--version'])
-    const { stdout, stderr } = await kit.execAndCapture('flake8', patterns, {
+    await kit.execAndCapture(flake8Path, ['--version'])
+    const { stdout, stderr } = await kit.execAndCapture(flake8Path, patterns, {
       failOnStdErr: false,
     })
     text = stdout + stderr
